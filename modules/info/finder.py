@@ -38,7 +38,7 @@ def backup_finder(req, target, info_cb, found_cb, not_found_cb):
         uri = f"{target}{file_name}"
         r = req.get(uri)
         if r.status_code == 200 and not r.headers['Content-Type'].startwith("text/html"):
-            found_cb(f"Found {name}: {uri}")
+            found_cb(f"Found {name}", uri)
             is_found = True
     if not is_found:
         not_found_cb(name)
@@ -86,7 +86,7 @@ def config_finder(req, target, info_cb, found_cb, not_found_cb):
         uri = f"{target}{file_name}"
         r = req.get(uri)
         if r.status_code == 200:
-            found_cb(f"Found {name}: {uri}")
+            found_cb(f"Found {name}", uri)
             is_found = True
 
     if not is_found:
@@ -111,7 +111,7 @@ def admin_finder(req, target, info_cb, found_cb, not_found_cb):
 
     if r.status_code == 200 and "Admin Control Panel" in str(r.content) or \
             "form action=\"../login.php?do=login" in str(r.content) or "ADMINHASH" in str(r.content):
-        found_cb(f"Found {name}: {uri}")
+        found_cb(f"Found {name}", uri)
         is_admin_found = True
     else:
         not_found_cb(f"Finding {name} from upgrade.php. {name}")
@@ -131,7 +131,7 @@ def admin_finder(req, target, info_cb, found_cb, not_found_cb):
                     except:
                         return ""
                 admin_url = parse_admin_dir(str(r.content))
-                found_cb(f"Found {name}: {admin_url}")
+                found_cb(f"Found {name}", admin_url)
                 is_admin_found = True
 
     if not is_admin_found:
@@ -147,7 +147,7 @@ def moderator_finder(req, target, info_cb, found_cb, not_found_cb):
 
     if r.status_code == 200 and "Moderator Control Panel" in str(r.content) or \
             "form action=\"../login.php?do=login" in str(r.content) or "ADMINHASH" in str(r.content):
-        found_cb(f"Found {name}: {uri}")
+        found_cb(f"Found {name}", uri)
     else:
         not_found_cb(name)
 
@@ -172,7 +172,7 @@ def error_finder(req, target, info_cb, found_cb, not_found_cb):
         uri = f"{target}{file_name}"
         r = req.get(uri)
         if r.status_code == 200 and not r.headers['Content-Type'].startwith("text/html"):
-            found_cb(f"Found {name}: {uri}")
+            found_cb(f"Found {name}", uri)
             is_found = True
 
     if not is_found:
@@ -190,7 +190,7 @@ def license_finder(req, target, info_cb, found_cb, not_found_cb):
     r = req.get(uri)
 
     if r.status_code == 200 and "text" in r.headers['Content-Type'] and "vBulletin License Agreement" in str(r.content):
-        found_cb(f"Found {name}: {uri}")
+        found_cb(f"Found {name}", uri)
         is_found = True
     if not is_found:
         not_found_cb(name)
