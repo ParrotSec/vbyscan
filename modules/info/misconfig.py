@@ -1,4 +1,4 @@
-def apache_config_checkder(req, target, info_cb, found_cb, not_found_cb):
+def apache_config_checker(req, target, info_cb, found_cb, not_found_cb):
     name = "Check Apache misconfigurations"
     is_found = False
     list_uri = [
@@ -17,4 +17,4 @@ def apache_config_checkder(req, target, info_cb, found_cb, not_found_cb):
                 found_cb("Interesting file is found", uri)
                 is_found = True
     if not is_found:
-        not_found_cb(name)
+        not_found_cb("Apache configurations")

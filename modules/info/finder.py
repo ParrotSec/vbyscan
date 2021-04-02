@@ -41,7 +41,7 @@ def backup_finder(req, target, info_cb, found_cb, not_found_cb):
             found_cb("Found backup file: " + uri)
             is_found = True
     if not is_found:
-        not_found_cb("No backup file has been found")
+        not_found_cb("Backup file")
 
 
 def config_finder(req, target, info_cb, found_cb, not_found_cb):
@@ -114,23 +114,28 @@ def admin_finder(req, target, info_cb, found_cb, not_found_cb):
         found_cb("Admin panel found: " + uri)
         is_admin_found = True
     else:
-        not_found_cb(name)
+        not_found_cb("Checking admin panel from upgrade.php. Admin panel")
 
-    if not is_admin_found:
-        name = "Find Admin Control Panel using upgrade.php"
         uri = f"{target}install/upgrade.php"
-
-        info_cb(name)
         r = req.get(uri)
 
         if r.status_code == 200:
-            # Original source uses regex /ADMINDIR = \"\.\.\/(.*?)\"\;/
             if "ADMINDIR = \"" in str(r.content):
-                found_cb("Admin panel found: " + uri)
+                def parse_admin_dir(data):
+                    import re
+                    regex = r"ADMINDIR = \"\.\.\/(.*?)\"\;"
+                    try:
+                        result = re.findall(regex, data)[0]
+                        if result:
+                            return result
+                    except:
+                        return ""
+                admin_url = parse_admin_dir(str(r.content))
+                found_cb("Admin panel found: " + admin_url)
                 is_admin_found = True
 
     if not is_admin_found:
-        not_found_cb("No admin panel has been found")
+        not_found_cb("Admin panel")
 
 
 def moderator_finder(req, target, info_cb, found_cb, not_found_cb):
@@ -144,7 +149,7 @@ def moderator_finder(req, target, info_cb, found_cb, not_found_cb):
             "form action=\"../login.php?do=login" in str(r.content) or "ADMINHASH" in str(r.content):
         found_cb("Moderator panel found: " + uri)
     else:
-        not_found_cb("No moderator panel has been found")
+        not_found_cb("Moderator panel")
 
 
 def error_finder(req, target, info_cb, found_cb, not_found_cb):
@@ -167,8 +172,8 @@ def error_finder(req, target, info_cb, found_cb, not_found_cb):
         uri = f"{target}{file_name}"
         r = req.get(uri)
         if r.status_code == 200 and not r.headers['Content-Type'].startwith("text/html"):
-            found_cb("Found config file: " + uri)
+            found_cb("Found error log: " + uri)
             is_found = True
 
     if not is_found:
-        not_found_cb("No error log has been found")
+        not_found_cb("Error log")

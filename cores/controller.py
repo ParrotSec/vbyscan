@@ -13,7 +13,7 @@ def fingerprint(client, target, verbose_cb, found_cb, not_found_cb):
     validator.run(client, target, verbose_cb, found_cb, not_found_cb)
 
     from modules.info import misconfig
-    misconfig.apache_config_checkder(client, target, verbose_cb, found_cb, not_found_cb)
+    misconfig.apache_config_checker(client, target, verbose_cb, found_cb, not_found_cb)
 
     from modules.info import finder
     finder.admin_finder(client, target, verbose_cb, found_cb, not_found_cb)
