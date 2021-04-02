@@ -5,7 +5,7 @@ if __name__ == '__main__':
     utils.program_banner()
     import sys
     import cores
-    if len(sys.argv) != 2:
+    if len(sys.argv) < 2:
         user_input = ""
         while not user_input:
             user_input = input("Enter target URL: ")
