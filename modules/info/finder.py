@@ -111,7 +111,7 @@ def cp_finder(req, target, info_cb, found_cb, not_found_cb):
 
     if r.status_code == 200 and "Admin Control Panel" in str(r.content) or \
             "form action=\"../login.php?do=login" in str(r.content) or "ADMINHASH" in str(r.content):
-        found_cb(name, uri)
+        found_cb("Admin panel found: " + uri)
         is_admin_found = True
     else:
         not_found_cb(name)
@@ -124,7 +124,7 @@ def cp_finder(req, target, info_cb, found_cb, not_found_cb):
 
     if r.status_code == 200 and "Moderator Control Panel" in str(r.content) or \
             "form action=\"../login.php?do=login" in str(r.content) or "ADMINHASH" in str(r.content):
-        found_cb(name, uri)
+        found_cb("Moderator panel found: " + uri)
     else:
         not_found_cb(name)
 
@@ -138,7 +138,7 @@ def cp_finder(req, target, info_cb, found_cb, not_found_cb):
         if r.status_code == 200:
             # Original source uses regex /ADMINDIR = \"\.\.\/(.*?)\"\;/
             if "ADMINDIR = \"" in str(r.content):
-                found_cb(name, uri)
+                found_cb("Admin panel found: " + uri)
                 is_admin_found = True
 
     if not is_admin_found:
