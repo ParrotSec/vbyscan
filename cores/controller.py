@@ -9,7 +9,8 @@ def fingerprint(client, target, verbose_cb, found_cb, not_found_cb):
     # from modules.info import firewall
     # firewall.firewall_detector(client, target, verbose_cb, found_cb, not_found_cb)
     # TODO check robots.txt
-    # TODO check validator.php
+    from modules.info import validator
+    validator.run(client, target, verbose_cb, found_cb, not_found_cb)
     # TODO check admin control panel and moderator control panel
     # TODO: check apache status
     # TODO: check backup and log
