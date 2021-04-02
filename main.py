@@ -25,6 +25,6 @@ if __name__ == '__main__':
                 else:
                     print("Unknown option " + arg)
             else:
-                target = cores.verify_target(sys.argv[1], verbose)
+                target = cores.verify_target(sys.argv[1])
     from cores import controller
-    controller.main_logic(target)
+    controller.main_logic(target, verbose)
