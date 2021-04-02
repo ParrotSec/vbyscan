@@ -16,5 +16,5 @@ def apache_config_checkder(req, target, info_cb, found_cb, not_found_cb):
                     "Apache Status" in str(r.content):
                 found_cb("Interesting file is found", uri)
                 is_found = True
-        if not is_found:
-            not_found_cb(name)
+    if not is_found:
+        not_found_cb(name)
