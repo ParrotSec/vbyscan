@@ -5,7 +5,6 @@
 [+] Checking for Tapatalk vulnerability
 [+] Checking config.php.x for disclure config file
 [+] Checking for OpenRedirection
-[+] Checking vBulletin YUI 2.9.0 XSS
 [+] Checking for html tags status
 https://github.com/OWASP/vbscan/blob/master/modules/pathdisclure.pl
 attachment_dir_listing
