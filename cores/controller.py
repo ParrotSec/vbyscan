@@ -16,6 +16,7 @@ def fingerprint(client, target, verbose_cb, found_cb, not_found_cb):
     misconfig.apache_config_checker(client, target, verbose_cb, found_cb, not_found_cb)
 
     from modules.info import finder
+    finder.license_finder(client, target, verbose_cb, found_cb, not_found_cb)
     finder.admin_finder(client, target, verbose_cb, found_cb, not_found_cb)
     finder.moderator_finder(client, target, verbose_cb, found_cb, not_found_cb)
 

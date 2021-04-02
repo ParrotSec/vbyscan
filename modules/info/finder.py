@@ -177,3 +177,20 @@ def error_finder(req, target, info_cb, found_cb, not_found_cb):
 
     if not is_found:
         not_found_cb(name)
+
+
+def license_finder(req, target, info_cb, found_cb, not_found_cb):
+    # https://github.com/OWASP/vbscan/blob/master/modules/license.pl
+    name = "License"
+    is_found = False
+    uri = f"{target}LICENSE"
+
+    info_cb(f"Finding {name}")
+
+    r = req.get(uri)
+
+    if r.status_code == 200 and "text" in r.headers['Content-Type'] and "vBulletin License Agreement" in str(r.content):
+        found_cb(f"Found {name}: {uri}")
+        is_found = True
+    if not is_found:
+        not_found_cb(name)
