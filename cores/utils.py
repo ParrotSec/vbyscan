@@ -30,8 +30,9 @@ def print_not_found(message, uri = ""):
         print(f"  {uri}")
 
 
-def help_banner():
-    pass
+def help_banner(program):
+    print(f"{program} <target> [--verbose / --silent]")
+
 
 
 def program_banner():

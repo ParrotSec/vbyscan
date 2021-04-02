@@ -20,7 +20,7 @@ if __name__ == '__main__':
                     verbose = False
                 elif arg == "--help" or arg == "-h" or arg == "-help":
                     from cores.utils import help_banner
-                    help_banner()
+                    help_banner(sys.argv[0])
                     exit(0)
                 else:
                     print("Unknown option " + arg)
