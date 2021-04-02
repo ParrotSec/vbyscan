@@ -41,7 +41,7 @@ def backup_finder(req, target, info_cb, found_cb, not_found_cb):
             found_cb("Found backup file: " + uri)
             is_found = True
     if not is_found:
-        not_found_cb(name)
+        not_found_cb("No backup file has been found")
 
 
 def config_finder(req, target, info_cb, found_cb, not_found_cb):
@@ -126,11 +126,11 @@ def cp_finder(req, target, info_cb, found_cb, not_found_cb):
             "form action=\"../login.php?do=login" in str(r.content) or "ADMINHASH" in str(r.content):
         found_cb("Moderator panel found: " + uri)
     else:
-        not_found_cb(name)
+        not_found_cb("No moderator panel has been found")
 
     if not is_admin_found:
         name = "Find Admin Control Panel using upgrade.php"
-        uri = f"{format}install/upgrade.php"
+        uri = f"{target}install/upgrade.php"
 
         info_cb(name)
         r = req.get(uri)
@@ -142,7 +142,7 @@ def cp_finder(req, target, info_cb, found_cb, not_found_cb):
                 is_admin_found = True
 
     if not is_admin_found:
-        not_found_cb(name)
+        not_found_cb("No admin panel has been found")
 
 
 def error_finder(req, target, info_cb, found_cb, not_found_cb):
@@ -169,4 +169,4 @@ def error_finder(req, target, info_cb, found_cb, not_found_cb):
             is_found = True
 
     if not is_found:
-        not_found_cb(name)
+        not_found_cb("No error log has been found")

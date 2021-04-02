@@ -24,31 +24,36 @@ def fingerprint(client, target, verbose_cb, found_cb, not_found_cb):
     finder.backup_finder(client, target, verbose_cb, found_cb, not_found_cb)
 
 
-def vuln_scan(client, target, verbose_cb, found_cb, not_found_cb):
+def vulnerability_scan(client, target, verbose_cb, found_cb, not_found_cb):
     import cores
     import importlib
     for module_name in cores.exploit_modules():
         module = importlib.import_module("modules.exploits." + module_name)
         try:
-            import traceback
             module.run(client, target, verbose_cb, found_cb, not_found_cb)
         except Exception as error:
-            print("Runtime error")
-            traceback.print_exc()
+            print("Runtime error: " + str(error))
 
 
 def main_logic(target, verbose=True):
     is_verbose = verbose
-    vuln_cb = print_vuln
+    vulnerability_cb = print_vulnerable
     info_found_cb = print_found
-    info_not_found_cb = print_not_found
     if is_verbose:
         verbose_cb = print_verbose
-        not_vuln_cb = print_not_vuln
+        not_vulnerability_cb = print_not_vulnerable
+        info_not_found_cb = print_not_found
     else:
         verbose_cb = dummy
-        not_vuln_cb = dummy
+        not_vulnerability_cb = dummy
+        info_not_found_cb = dummy
     client = requests.Session()
     client.headers.update({'User-agent': 'Mozilla/5.0'})
+    print("Information scan\n")
     fingerprint(client, target, verbose_cb, info_found_cb, info_not_found_cb)
-    vuln_scan(client, target, verbose_cb, vuln_cb, not_vuln_cb)
+
+    print("\nVulnerability scan\n")
+    vulnerability_scan(client, target, verbose_cb, vulnerability_cb, not_vulnerability_cb)
+
+    print("")
+    print_verbose("Completed")
