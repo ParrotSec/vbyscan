@@ -1,4 +1,4 @@
-def firewall_detector(req, target, info_cb, found_cb, not_found_cb):
+def apache_config_checkder(req, target, info_cb, found_cb, not_found_cb):
     name = "Check Apache misconfigurations"
     is_found = False
     list_uri = [

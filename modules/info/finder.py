@@ -101,9 +101,9 @@ def config_finder(req, target, info_cb, found_cb, not_found_cb):
 
 def cp_finder(req, target, info_cb, found_cb, not_found_cb):
     # https://github.com/OWASP/vbscan/blob/master/modules/cpfinder.pl
-    # TODO https://github.com/OWASP/vbscan/blob/master/modules/cpupgrade.pl
+    # https://github.com/OWASP/vbscan/blob/master/modules/cpupgrade.pl
     name = "Admin Control Panel finder"
-    uri = f"{format}admincp/index.php"
+    uri = f"{target}admincp/index.php"
     is_admin_found = False
 
     info_cb(name)
@@ -117,7 +117,7 @@ def cp_finder(req, target, info_cb, found_cb, not_found_cb):
         not_found_cb(name)
 
     name = "Moderator Control Panel finder"
-    uri = f"{format}modcp/index.php"
+    uri = f"{target}modcp/index.php"
 
     info_cb(name)
     r = req.get(uri)
@@ -128,34 +128,21 @@ def cp_finder(req, target, info_cb, found_cb, not_found_cb):
     else:
         not_found_cb(name)
 
-    """
-        if(!($amtf==1 || $mmtf==1)){
-            tprint($adtext);
-        }else{
-            fprint($adtext);
-        }
-        #end admincp/modcp
-
-        :return:
-        """
-
     if not is_admin_found:
         name = "Find Admin Control Panel using upgrade.php"
         uri = f"{format}install/upgrade.php"
+
+        info_cb(name)
+        r = req.get(uri)
+
         if r.status_code == 200:
-            """
-                    $source=$response->decoded_content;
-                    $source =~ /ADMINDIR = \"\.\.\/(.*?)\"\;/;
-                    if($1 != ""){
-                        tprint("admincp exist $target/$1");
-                    }else{goto np;}
-                } else {
-                    np:;
-                    fprint("upgrade.php not found");
-                }
-            }
-            """
-            pass
+            # Original source uses regex /ADMINDIR = \"\.\.\/(.*?)\"\;/
+            if "ADMINDIR = \"" in str(r.content):
+                found_cb(name, uri)
+                is_admin_found = True
+
+    if not is_admin_found:
+        not_found_cb(name)
 
 
 def error_finder(req, target, info_cb, found_cb, not_found_cb):

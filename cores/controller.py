@@ -11,9 +11,17 @@ def fingerprint(client, target, verbose_cb, found_cb, not_found_cb):
     # TODO check robots.txt
     from modules.info import validator
     validator.run(client, target, verbose_cb, found_cb, not_found_cb)
-    # TODO check admin control panel and moderator control panel
-    # TODO: check apache status
+
+    from modules.info import misconfig
+    misconfig.apache_config_checkder(client, target, verbose_cb, found_cb, not_found_cb)
+
+    from modules.info import finder
+    finder.cp_finder(client, target, verbose_cb, found_cb, not_found_cb)
     # TODO: check backup and log
+    finder.error_finder(client, target, verbose_cb, found_cb, not_found_cb)
+    # TODO check config
+    # finder.config_finder(client, target, verbose_cb, found_cb, not_found_cb)
+    finder.backup_finder(client, target, verbose_cb, found_cb, not_found_cb)
 
 
 def vuln_scan(client, target, verbose_cb, found_cb, not_found_cb):
