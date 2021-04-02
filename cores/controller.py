@@ -20,8 +20,8 @@ def vuln_scan(client, target, verbose_cb, found_cb, not_found_cb):
             print("Runtime error: " + error)
 
 
-def main_logic(target):
-    is_verbose = True
+def main_logic(target, verbose=True):
+    is_verbose = verbose
     vuln_cb = print_vuln
     info_found_cb = print_found
     info_not_found_cb = print_not_found
