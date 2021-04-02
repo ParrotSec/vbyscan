@@ -1,9 +1,10 @@
 def verify_target(target):
-    if not target.startswith("http"):
-        target = "http://" + target
-    if not target.endswith("/"):
-        target = target + "/"
-        return target
+    result = target
+    if not result.startswith("http"):
+        result = "http://" + result
+    if not result.endswith("/"):
+        result = result + "/"
+    return result
 
 
 def exploit_modules():
