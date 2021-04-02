@@ -3,7 +3,7 @@ import re
 
 def get_version(req, target, info_cb, found_cb, not_found_cb):
     def parse_version(data):
-        regex = rf"([vVbB]ulletin [\d.]+)"
+        regex = r"([vV][bB]ulletin [\d.]+)"
         try:
             result = re.findall(regex, data)[0]
             if result:
