@@ -1,5 +1,5 @@
 def firewall_detector(req, target, info_cb, found_cb, not_found_cb):
-    name = "Check vBulletin's default firewall"
+    name = "vBulletin's default firewall"
     is_found = False
 
     info_cb(f"Checking {name}")

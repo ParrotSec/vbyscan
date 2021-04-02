@@ -10,7 +10,7 @@ Contains:
 
 def backup_finder(req, target, info_cb, found_cb, not_found_cb):
     # https://github.com/OWASP/vbscan/blob/master/modules/backupfinder.pl
-    name = "Find backup files"
+    name = "backup files"
     is_found = False
     list_backups = [
         "1.zip",
@@ -47,7 +47,7 @@ def backup_finder(req, target, info_cb, found_cb, not_found_cb):
 def config_finder(req, target, info_cb, found_cb, not_found_cb):
     # TODO need to check original code again
     # https://github.com/OWASP/vbscan/blob/master/modules/configfinder.pl
-    name = "Find config files"
+    name = "configuration files"
     is_found = False
     list_config = [
         "config.php~",
@@ -80,7 +80,7 @@ def config_finder(req, target, info_cb, found_cb, not_found_cb):
         "config.phtml"
     ]
 
-    info_cb(f"Checking {name}")
+    info_cb(f"Finding {name}")
 
     for file_name in list_config:
         uri = f"{target}{file_name}"
@@ -102,11 +102,11 @@ def config_finder(req, target, info_cb, found_cb, not_found_cb):
 def admin_finder(req, target, info_cb, found_cb, not_found_cb):
     # https://github.com/OWASP/vbscan/blob/master/modules/cpfinder.pl
     # https://github.com/OWASP/vbscan/blob/master/modules/cpupgrade.pl
-    name = "Admin Control Panel finder"
+    name = "admin's Control Panel"
     uri = f"{target}admincp/index.php"
     is_admin_found = False
 
-    info_cb(name)
+    info_cb(f"Finding {name}")
     r = req.get(uri)
 
     if r.status_code == 200 and "Admin Control Panel" in str(r.content) or \
@@ -114,7 +114,7 @@ def admin_finder(req, target, info_cb, found_cb, not_found_cb):
         found_cb("Admin panel found: " + uri)
         is_admin_found = True
     else:
-        not_found_cb("Checking admin panel from upgrade.php. Admin panel")
+        not_found_cb("Finding admin panel from upgrade.php. Admin panel")
 
         uri = f"{target}install/upgrade.php"
         r = req.get(uri)
@@ -135,26 +135,26 @@ def admin_finder(req, target, info_cb, found_cb, not_found_cb):
                 is_admin_found = True
 
     if not is_admin_found:
-        not_found_cb("Admin panel")
+        not_found_cb(name)
 
 
 def moderator_finder(req, target, info_cb, found_cb, not_found_cb):
-    name = "Moderator Control Panel finder"
+    name = "moderator's Control Panel"
     uri = f"{target}modcp/index.php"
 
-    info_cb(name)
+    info_cb(f"Finding {name}")
     r = req.get(uri)
 
     if r.status_code == 200 and "Moderator Control Panel" in str(r.content) or \
             "form action=\"../login.php?do=login" in str(r.content) or "ADMINHASH" in str(r.content):
         found_cb("Moderator panel found: " + uri)
     else:
-        not_found_cb("Moderator panel")
+        not_found_cb(name)
 
 
 def error_finder(req, target, info_cb, found_cb, not_found_cb):
     # https://github.com/OWASP/vbscan/blob/master/modules/errfinder.pl
-    name = "Find error logs"
+    name = "error logs"
     is_found = False
     list_err_logs = [
         "error.log",
@@ -166,7 +166,7 @@ def error_finder(req, target, info_cb, found_cb, not_found_cb):
         "debug.log",
     ]
 
-    info_cb(f"Checking {name}")
+    info_cb(f"Finding {name}")
 
     for file_name in list_err_logs:
         uri = f"{target}{file_name}"
@@ -176,4 +176,4 @@ def error_finder(req, target, info_cb, found_cb, not_found_cb):
             is_found = True
 
     if not is_found:
-        not_found_cb("Error log")
+        not_found_cb(name)
