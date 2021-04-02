@@ -99,7 +99,7 @@ def config_finder(req, target, info_cb, found_cb, not_found_cb):
     """
 
 
-def cp_finder(req, target, info_cb, found_cb, not_found_cb):
+def admin_finder(req, target, info_cb, found_cb, not_found_cb):
     # https://github.com/OWASP/vbscan/blob/master/modules/cpfinder.pl
     # https://github.com/OWASP/vbscan/blob/master/modules/cpupgrade.pl
     name = "Admin Control Panel finder"
@@ -116,18 +116,6 @@ def cp_finder(req, target, info_cb, found_cb, not_found_cb):
     else:
         not_found_cb(name)
 
-    name = "Moderator Control Panel finder"
-    uri = f"{target}modcp/index.php"
-
-    info_cb(name)
-    r = req.get(uri)
-
-    if r.status_code == 200 and "Moderator Control Panel" in str(r.content) or \
-            "form action=\"../login.php?do=login" in str(r.content) or "ADMINHASH" in str(r.content):
-        found_cb("Moderator panel found: " + uri)
-    else:
-        not_found_cb("No moderator panel has been found")
-
     if not is_admin_found:
         name = "Find Admin Control Panel using upgrade.php"
         uri = f"{target}install/upgrade.php"
@@ -143,6 +131,20 @@ def cp_finder(req, target, info_cb, found_cb, not_found_cb):
 
     if not is_admin_found:
         not_found_cb("No admin panel has been found")
+
+
+def moderator_finder(req, target, info_cb, found_cb, not_found_cb):
+    name = "Moderator Control Panel finder"
+    uri = f"{target}modcp/index.php"
+
+    info_cb(name)
+    r = req.get(uri)
+
+    if r.status_code == 200 and "Moderator Control Panel" in str(r.content) or \
+            "form action=\"../login.php?do=login" in str(r.content) or "ADMINHASH" in str(r.content):
+        found_cb("Moderator panel found: " + uri)
+    else:
+        not_found_cb("No moderator panel has been found")
 
 
 def error_finder(req, target, info_cb, found_cb, not_found_cb):
