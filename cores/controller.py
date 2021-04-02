@@ -52,7 +52,7 @@ def main_logic(target, verbose=True):
         info_not_found_cb = dummy
     client = requests.Session()
     client.headers.update({'User-agent': 'Mozilla/5.0'})
-    print("Information scan\n")
+    print("Target enumeration\n")
     fingerprint(client, target, verbose_cb, info_found_cb, info_not_found_cb)
 
     print("\nVulnerability scan\n")
