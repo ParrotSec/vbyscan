@@ -10,7 +10,7 @@ Contains:
 
 def backup_finder(req, target, info_cb, found_cb, not_found_cb):
     # https://github.com/OWASP/vbscan/blob/master/modules/backupfinder.pl
-    name = "backup files"
+    name = "Backup files"
     is_found = False
     list_backups = [
         "1.zip",
@@ -38,16 +38,16 @@ def backup_finder(req, target, info_cb, found_cb, not_found_cb):
         uri = f"{target}{file_name}"
         r = req.get(uri)
         if r.status_code == 200 and not r.headers['Content-Type'].startwith("text/html"):
-            found_cb("Found backup file: " + uri)
+            found_cb(f"Found {name}: {uri}")
             is_found = True
     if not is_found:
-        not_found_cb("Backup file")
+        not_found_cb(name)
 
 
 def config_finder(req, target, info_cb, found_cb, not_found_cb):
     # TODO need to check original code again
     # https://github.com/OWASP/vbscan/blob/master/modules/configfinder.pl
-    name = "configuration files"
+    name = "Config files"
     is_found = False
     list_config = [
         "config.php~",
@@ -86,7 +86,7 @@ def config_finder(req, target, info_cb, found_cb, not_found_cb):
         uri = f"{target}{file_name}"
         r = req.get(uri)
         if r.status_code == 200:
-            found_cb("Found config file: " + uri)
+            found_cb(f"Found {name}: {uri}")
             is_found = True
 
     if not is_found:
@@ -102,7 +102,7 @@ def config_finder(req, target, info_cb, found_cb, not_found_cb):
 def admin_finder(req, target, info_cb, found_cb, not_found_cb):
     # https://github.com/OWASP/vbscan/blob/master/modules/cpfinder.pl
     # https://github.com/OWASP/vbscan/blob/master/modules/cpupgrade.pl
-    name = "admin's Control Panel"
+    name = "Admin's Control Panel"
     uri = f"{target}admincp/index.php"
     is_admin_found = False
 
@@ -111,10 +111,10 @@ def admin_finder(req, target, info_cb, found_cb, not_found_cb):
 
     if r.status_code == 200 and "Admin Control Panel" in str(r.content) or \
             "form action=\"../login.php?do=login" in str(r.content) or "ADMINHASH" in str(r.content):
-        found_cb("Admin panel found: " + uri)
+        found_cb(f"Found {name}: {uri}")
         is_admin_found = True
     else:
-        not_found_cb("Finding admin panel from upgrade.php. Admin panel")
+        not_found_cb(f"Finding {name} from upgrade.php. {name}")
 
         uri = f"{target}install/upgrade.php"
         r = req.get(uri)
@@ -131,7 +131,7 @@ def admin_finder(req, target, info_cb, found_cb, not_found_cb):
                     except:
                         return ""
                 admin_url = parse_admin_dir(str(r.content))
-                found_cb("Admin panel found: " + admin_url)
+                found_cb(f"Found {name}: {admin_url}")
                 is_admin_found = True
 
     if not is_admin_found:
@@ -139,7 +139,7 @@ def admin_finder(req, target, info_cb, found_cb, not_found_cb):
 
 
 def moderator_finder(req, target, info_cb, found_cb, not_found_cb):
-    name = "moderator's Control Panel"
+    name = "Moderator's Control Panel"
     uri = f"{target}modcp/index.php"
 
     info_cb(f"Finding {name}")
@@ -147,14 +147,14 @@ def moderator_finder(req, target, info_cb, found_cb, not_found_cb):
 
     if r.status_code == 200 and "Moderator Control Panel" in str(r.content) or \
             "form action=\"../login.php?do=login" in str(r.content) or "ADMINHASH" in str(r.content):
-        found_cb("Moderator panel found: " + uri)
+        found_cb(f"Found {name}: {uri}")
     else:
         not_found_cb(name)
 
 
 def error_finder(req, target, info_cb, found_cb, not_found_cb):
     # https://github.com/OWASP/vbscan/blob/master/modules/errfinder.pl
-    name = "error logs"
+    name = "Error logs"
     is_found = False
     list_err_logs = [
         "error.log",
@@ -172,7 +172,7 @@ def error_finder(req, target, info_cb, found_cb, not_found_cb):
         uri = f"{target}{file_name}"
         r = req.get(uri)
         if r.status_code == 200 and not r.headers['Content-Type'].startwith("text/html"):
-            found_cb("Found error log: " + uri)
+            found_cb(f"Found {name}: {uri}")
             is_found = True
 
     if not is_found:
