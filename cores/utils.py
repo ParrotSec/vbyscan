@@ -7,15 +7,16 @@ def print_verbose(message):
 
 
 def print_vulnerable(name, uri=""):
-    # Bright Cyan
-    print(f"  [\033[95m*\033[00m] \033[96m{name}\033[00m is vulnerable")
+    # Bright Magenta
+    print(f"  [\033[96m*\033[00m] \033[95m{name}\033[00m is\033[91m vulnerable\033[00m")
     if uri:
-        # Bright blue
-        print(f"  \033[94m{uri}\033[0m")
+        # Bright Cyan
+        print(f"  \033[96m{uri}\033[0m")
 
 
 def print_not_vulnerable(name):
-    print(f"  [!] {name} is not vulnerable")
+    # Bright yellow
+    print(f"  [\033[93m!\033[00m] \033[93m{name}\033[00m is\033[37m not vulnerable\033[00m")
 
 
 def print_found(message, uri=""):
@@ -27,7 +28,7 @@ def print_found(message, uri=""):
 
 
 def print_not_found(message):
-    print(f"  [-] {message} not found")
+    print(f"  [\033[91m-\033[00m] {message} not found")
 
 
 def help_banner(program):
