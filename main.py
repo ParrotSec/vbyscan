@@ -1,12 +1,15 @@
 
 if __name__ == '__main__':
     from cores import utils
-    verbose = True
+
     utils.program_banner()
+
+    target = ""
+    verbose = True
+
     import sys
     import cores
 
-    target = ""
     for arg in sys.argv:
         if arg.startswith("-"):
             if arg == "--verbose":
@@ -20,8 +23,7 @@ if __name__ == '__main__':
             else:
                 print("Unknown option " + arg)
         else:
-            if target:
-                target = cores.verify_target(sys.argv[1])
+            target = cores.verify_target(arg)
 
     if not target:
         user_input = ""
