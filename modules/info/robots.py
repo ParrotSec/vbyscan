@@ -1,31 +1,31 @@
 
 def robot_check(req, target, info_cb, not_found_cb):
-    name = r'robots.txt existing'
+    name = "robots.txt check"
     info_cb(name)
 
     uri = target + "/robots.txt"
     r = req.get(uri)
 
     try:
-        if r.status_code == 200 and r'text/plain' in r.headers["Content-Type"]:
-            for line in str(r.content).split("\n"):
-                sub_path = line.split(": /")
-                if len(sub_path) == 2 and "Disallow" == sub_path[0]:
-                    branch = sub_path[1].replace("\n", "").replace("\r", "")
+        if r.status_code == 200 and "text/plain" in r.headers["Content-Type"]:
+            for line in r.content.decode('utf-8').split("\n"):
+                if line.startswith("Disallow:"):
+                    branch = line.split(": /")[1]
                     new_uri = f"{target}{branch}"
                     sr = req.get(new_uri)
                     # TODO custom color here
                     if sr.status_code == 404:
                         pass
                     if sr.status_code < 300:
-                        print(uri)
+                        print(f"  {new_uri} {sr.status_code}")
                     elif sr.status_code < 400:
-                        print(uri)
+                        print(f"  {new_uri} {sr.status_code}")
                     elif sr.status_code < 500:
-                        print(uri)
+                        print(f"  {new_uri} {sr.status_code}")
                     else:
-                        print(uri)
+                        print(f"  {new_uri} {sr.status_code}")
         else:
             not_found_cb(name)
-    except:
+    except Exception as error:
+        print(error)
         not_found_cb(name)
