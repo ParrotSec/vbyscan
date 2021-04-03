@@ -15,3 +15,12 @@ def exploit_modules():
         for file in files:
             if not file.startswith("__") and file.endswith(".py"):
                 yield file.split(".")[0]
+
+
+def gen_hash():
+    # https://stackoverflow.com/a/2257449
+    import string
+    import random
+    str_gen = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(8))
+    import hashlib
+    return hashlib.md5(str_gen.encode('utf-8')).hexdigest()
