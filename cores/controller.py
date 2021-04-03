@@ -60,6 +60,8 @@ def main_logic(target, verbose=True):
     try:
         from modules.enumerate import version
         if not version.get_version(client, target, verbose_cb, info_found_cb, info_not_found_cb):
+            if not verbose:
+                print_not_found("vBulletin version")
             while True:
                 user_choice = input("  Do you want to continue? [Y/n] ")
                 if user_choice == "y" or user_choice == "Y":
