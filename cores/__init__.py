@@ -1,3 +1,7 @@
+def get_version():
+    return "0.1.0"
+
+
 def verify_target(target):
     result = target
     if not result.startswith("http"):
