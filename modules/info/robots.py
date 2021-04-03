@@ -17,13 +17,17 @@ def robot_check(req, target, info_cb, not_found_cb):
                     if sr.status_code == 404:
                         pass
                     if sr.status_code < 300:
-                        print(f"  {new_uri} {sr.status_code}")
+                        # Bright green
+                        print(f"  \033[94m{new_uri} \033[92m{sr.status_code}\033[00m")
                     elif sr.status_code < 400:
-                        print(f"  {new_uri} {sr.status_code}")
+                        # Bright white
+                        print(f"  \033[94m{new_uri} \033[97m{sr.status_code}\033[00m")
                     elif sr.status_code < 500:
-                        print(f"  {new_uri} {sr.status_code}")
+                        # Bright red
+                        print(f"  \033[94m{new_uri} \033[91m{sr.status_code}\033[00m")
                     else:
-                        print(f"  {new_uri} {sr.status_code}")
+                        # Bright cyan
+                        print(f"  \033[94m{new_uri} \033[96m{sr.status_code}\033[00m")
         else:
             not_found_cb(name)
     except Exception as error:

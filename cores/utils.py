@@ -7,21 +7,23 @@ def print_verbose(message):
 
 
 def print_vulnerable(name, uri=""):
-    # TODO not found and not vulnerable
-    print(f"  [*] {name} is vulnerable")
+    # Bright Cyan
+    print(f"  [\033[95m*\033[00m] \033[96m{name}\033[00m is vulnerable")
     if uri:
-        print(f"  {uri}")
+        # Bright blue
+        print(f"  \033[94m{uri}\033[0m")
 
 
 def print_not_vulnerable(name):
-    # TODO not found and not vulnerable
     print(f"  [!] {name} is not vulnerable")
 
 
 def print_found(message, uri=""):
-    print(f"  [*] {message}")
+    # Bright green
+    print(f"  [\033[97m*\033[00m] \033[92m{message}\033[00m")
     if uri:
-        print(f"  {uri}")
+        # Bright blue
+        print(f"  \033[94m{uri}\033[00m")
 
 
 def print_not_found(message):
