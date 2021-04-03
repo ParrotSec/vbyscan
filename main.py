@@ -10,7 +10,7 @@ if __name__ == '__main__':
     import sys
     import cores
 
-    for arg in sys.argv:
+    for arg in sys.argv[1:-1]:
         if arg.startswith("-"):
             if arg == "--verbose":
                 verbose = True
