@@ -5,26 +5,30 @@ if __name__ == '__main__':
     utils.program_banner()
     import sys
     import cores
-    if len(sys.argv) < 2:
+
+    target = ""
+    for arg in sys.argv:
+        if arg.startswith("-"):
+            if arg == "--verbose":
+                verbose = True
+            elif arg == "--silent":
+                verbose = False
+            elif arg == "--help" or arg == "-h" or arg == "-help":
+                from cores.utils import help_banner
+                help_banner(sys.argv[0])
+                exit(0)
+            else:
+                print("Unknown option " + arg)
+        else:
+            if target:
+                target = cores.verify_target(sys.argv[1])
+
+    if not target:
         user_input = ""
         while not user_input:
             user_input = input("Enter target URL: ")
             if user_input:
                 target = cores.verify_target(user_input)
-    else:
-        for arg in sys.argv:
-            if arg.startswith("-"):
-                if arg == "--verbose":
-                    verbose = True
-                elif arg == "--silent":
-                    verbose = False
-                elif arg == "--help" or arg == "-h" or arg == "-help":
-                    from cores.utils import help_banner
-                    help_banner(sys.argv[0])
-                    exit(0)
-                else:
-                    print("Unknown option " + arg)
-            else:
-                target = cores.verify_target(sys.argv[1])
+
     from cores import controller
     controller.main_logic(target, verbose)
