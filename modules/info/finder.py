@@ -36,10 +36,13 @@ def backup_finder(req, target, info_cb, found_cb, not_found_cb):
 
     for file_name in list_backups:
         uri = f"{target}{file_name}"
-        r = req.get(uri)
-        if r.status_code == 200 and not r.headers['Content-Type'].startwith("text/html"):
-            found_cb(f"Found {name}", uri)
-            is_found = True
+        try:
+            r = req.get(uri)
+            if r.status_code == 200 and not r.headers['Content-Type'].startwith("text/html"):
+                found_cb(f"Found {name}", uri)
+                is_found = True
+        except:
+            pass
     if not is_found:
         not_found_cb(name)
 
@@ -170,10 +173,14 @@ def error_finder(req, target, info_cb, found_cb, not_found_cb):
 
     for file_name in list_err_logs:
         uri = f"{target}{file_name}"
-        r = req.get(uri)
-        if r.status_code == 200 and not r.headers['Content-Type'].startwith("text/html"):
-            found_cb(f"Found {name}", uri)
-            is_found = True
+
+        try:
+            r = req.get(uri)
+            if r.status_code == 200 and not r.headers['Content-Type'].startwith("text/html"):
+                found_cb(f"Found {name}", uri)
+                is_found = True
+        except:
+            pass
 
     if not is_found:
         not_found_cb(name)
@@ -187,10 +194,12 @@ def license_finder(req, target, info_cb, found_cb, not_found_cb):
 
     info_cb(f"Finding {name}")
 
-    r = req.get(uri)
-
-    if r.status_code == 200 and "text" in r.headers['Content-Type'] and "vBulletin License Agreement" in str(r.content):
-        found_cb(f"Found {name}", uri)
-        is_found = True
+    try:
+        r = req.get(uri)
+        if r.status_code == 200 and "text" in r.headers['Content-Type'] and "vBulletin License Agreement" in str(r.content):
+            found_cb(f"Found {name}", uri)
+            is_found = True
+    except:
+        pass
     if not is_found:
         not_found_cb(name)
