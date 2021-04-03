@@ -3,8 +3,6 @@ import requests
 
 
 def fingerprint(client, target, verbose_cb, found_cb, not_found_cb):
-    from modules.info import version
-    version.get_version(client, target, verbose_cb, found_cb, not_found_cb)
     # FIXME firewall is so slow
     # from modules.info import firewall
     # firewall.firewall_detector(client, target, verbose_cb, found_cb, not_found_cb)
@@ -58,7 +56,24 @@ def main_logic(target, verbose=True):
         info_not_found_cb = dummy
     client = requests.Session()
     client.headers.update({'User-agent': 'Mozilla/5.0'})
-    print("Target enumeration\n")
+
+    try:
+        from modules.info import version
+        if not version.get_version(client, target, verbose_cb, info_found_cb, info_not_found_cb):
+            while True:
+                user_choice = input("  Do you want to continue? [Y/n] ")
+                if user_choice == "y" or user_choice == "Y":
+                    break
+                elif user_choice == "n" or user_choice == "N":
+                    return
+                else:
+                    print(f"  Unknown choice \"{user_choice}\". Please select 'Y' or 'N'.")
+    except Exception as error:
+        print("  Error while checking target's version")
+        print(error)
+        return
+
+    print("\nTarget enumeration\n")
     fingerprint(client, target, verbose_cb, info_found_cb, info_not_found_cb)
 
     print("\nVulnerability scan\n")
