@@ -1,19 +1,19 @@
 
-def robot_check(req, target, info_cb, not_found_cb):
-    name = "robots.txt check"
-    info_cb(name)
+def robot_check(req, target, info_cb, found_cb, not_found_cb):
+    name = "robots.txt"
+    info_cb(f"Checking {name}")
 
-    uri = target + "/robots.txt"
+    uri = f"{target}robots.txt"
     r = req.get(uri)
 
     try:
         if r.status_code == 200 and "text/plain" in r.headers["Content-Type"]:
+            found_cb(name, uri)
             for line in r.content.decode('utf-8').split("\n"):
                 if line.startswith("Disallow:"):
                     branch = line.split(": /")[1].replace("\r", "").replace("\n", "")
                     new_uri = f"{target}{branch}"
                     sr = req.get(new_uri)
-                    # TODO custom color here
                     if sr.status_code == 404:
                         pass
                     if sr.status_code < 300:
