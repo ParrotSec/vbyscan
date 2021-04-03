@@ -9,7 +9,7 @@ def parse_path(data):
         r"No such file or directory (errno 2) in (.*?) on line",
         r"No such file or directory in (.*?) in line",
     ]
-    # path = ""
+
     for rg_text in rg_list:
         try:
             path = re.findall(rg_text, data)[0]
@@ -22,7 +22,7 @@ def parse_path(data):
 
 
 def path_disclosure(req, target, info_cb, found_cb, not_found_cb):
-    name = "vBulletin's Path Disclure"
+    name = "vBulletin's path disclosure"
     info_cb(f"Checking {name}")
 
     is_found = False
@@ -47,16 +47,17 @@ def path_disclosure(req, target, info_cb, found_cb, not_found_cb):
                 "Fatal error" in str(r.content):
             path = parse_path(str(r.content))
             if path:
+                tags = [
+                    "<b>",
+                    "</b>",
+                    "<strong>",
+                    "</strong>",
+                ]
+                for tag in tags:
+                    if tag in path:
+                        path = path.replace(tag, "")
                 found_cb(name, path)
-            # if not pathdis == None:
-            #     pathdis = re.sub(r'<b>', '', pathdis.group(1), re.I)
-            #     pathdis = re.sub(r'</b>', '', pathdis, re.I)
-            #     pathdis = re.sub(r'<strong>', '', pathdis, re.I)
-            #     pathdis = re.sub(r'</strong>', '', pathdis, re.I)
-            #     target = re.sub(r'/$', '', target)
-            #     found_cb(f"Full Path Disclosure (FPD) in '{target}/{plink}' : {pathdis}")
-            #     is_found = True
-            #     break
+                return
 
     if not is_found:
         not_found_cb(name)
