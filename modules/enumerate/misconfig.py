@@ -3,7 +3,7 @@ def apache_config_checker(req, target, info_cb, found_cb, not_found_cb):
     is_found = False
     list_uri = [
         "server-status",
-        "server-info"
+        "server-enumerate"
     ]
 
     info_cb(f"Checking {name}")
