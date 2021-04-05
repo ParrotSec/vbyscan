@@ -24,6 +24,9 @@ def fingerprint(client, target, verbose_cb, found_cb, not_found_cb):
     # TODO check config
     # finder.config_finder(client, target, verbose_cb, found_cb, not_found_cb)
 
+    from modules.enumerate import dir_listing
+    dir_listing.check_dir_listing(client, target, verbose_cb, found_cb, not_found_cb)
+
     from modules.enumerate import path_disclosure
     path_disclosure.path_disclosure(client, target, verbose_cb, found_cb, not_found_cb)
 
