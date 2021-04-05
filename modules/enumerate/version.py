@@ -28,11 +28,11 @@ def get_version(req, target, info_cb, found_cb, not_found_cb):
         if r.status_code == 200:
             if uri == target:
                 # <meta name="generator" content="vBulletin 3.7.1" />, line 10
-                # cmp_data = str(r.content)
-                cmp_data = "\n".join(str(r.content).split("\n")[0:15])
+                # cmp_data = r.text
+                cmp_data = "\n".join(r.text.split("\n")[0:15])
             else:
                 # Likely the code gets version from banner only. We try cut the data to very short text
-                cmp_data = "\n".join(str(r.content).split("\n")[0:5])
+                cmp_data = "\n".join(r.text.split("\n")[0:5])
             version = parse_version(cmp_data)
             if version:
                 found_cb(version)

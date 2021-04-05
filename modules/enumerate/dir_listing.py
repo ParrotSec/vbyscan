@@ -7,7 +7,7 @@ def check_dir_listing(req, target, info_cb, found_cb, not_found_cb):
 
     r = req.get(uri)
 
-    if r.status_code == 200 and ("<title>Index of" in str(r.content) or "Last modified</a>" in str(r.content)):
+    if r.status_code == 200 and ("<title>Index of" in r.text or "Last modified</a>" in r.text):
         found_cb(name, uri)
         is_found = True
     if not is_found:

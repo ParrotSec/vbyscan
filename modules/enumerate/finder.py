@@ -112,8 +112,8 @@ def admin_finder(req, target, info_cb, found_cb, not_found_cb):
     info_cb(f"Finding {name}")
     r = req.get(uri)
 
-    if r.status_code == 200 and "Admin Control Panel" in str(r.content) or \
-            "form action=\"../login.php?do=login" in str(r.content) or "ADMINHASH" in str(r.content):
+    if r.status_code == 200 and "Admin Control Panel" in r.text or \
+            "form action=\"../login.php?do=login" in r.text or "ADMINHASH" in r.text:
         found_cb(f"Found {name}", uri)
         is_admin_found = True
     else:
@@ -123,7 +123,7 @@ def admin_finder(req, target, info_cb, found_cb, not_found_cb):
         r = req.get(uri)
 
         if r.status_code == 200:
-            if "ADMINDIR = \"" in str(r.content):
+            if "ADMINDIR = \"" in r.text:
                 def parse_admin_dir(data):
                     import re
                     regex = r"ADMINDIR = \"\.\.\/(.*?)\"\;"
@@ -133,7 +133,7 @@ def admin_finder(req, target, info_cb, found_cb, not_found_cb):
                             return result
                     except:
                         return ""
-                admin_url = parse_admin_dir(str(r.content))
+                admin_url = parse_admin_dir(r.text)
                 found_cb(f"Found {name}", admin_url)
                 is_admin_found = True
 
@@ -148,8 +148,8 @@ def moderator_finder(req, target, info_cb, found_cb, not_found_cb):
     info_cb(f"Finding {name}")
     r = req.get(uri)
 
-    if r.status_code == 200 and "Moderator Control Panel" in str(r.content) or \
-            "form action=\"../login.php?do=login" in str(r.content) or "ADMINHASH" in str(r.content):
+    if r.status_code == 200 and "Moderator Control Panel" in r.text or \
+            "form action=\"../login.php?do=login" in r.text or "ADMINHASH" in r.text:
         found_cb(f"Found {name}", uri)
     else:
         not_found_cb(name)
@@ -196,7 +196,7 @@ def license_finder(req, target, info_cb, found_cb, not_found_cb):
 
     try:
         r = req.get(uri)
-        if r.status_code == 200 and "text" in r.headers['Content-Type'] and "vBulletin License Agreement" in str(r.content):
+        if r.status_code == 200 and "text" in r.headers['Content-Type'] and "vBulletin License Agreement" in r.text:
             found_cb(f"Found {name}", uri)
             is_found = True
     except:

@@ -42,10 +42,10 @@ def path_disclosure(req, target, info_cb, found_cb, not_found_cb):
     
     for plink in plinks:
         r = req.get(target + plink)
-        if "Cannot modify header information" in str(r.content) or "trim()" in str(r.content) or \
-                "class_core.php" in str(r.content) or "header already sent" in str(r.content) or \
-                "Fatal error" in str(r.content):
-            path = parse_path(str(r.content))
+        if "Cannot modify header information" in r.text or "trim()" in r.text or \
+                "class_core.php" in r.text or "header already sent" in r.text or \
+                "Fatal error" in r.text:
+            path = parse_path(r.text)
             if path:
                 tags = [
                     "<b>",
