@@ -36,8 +36,8 @@ def get_version(req, target, info_cb, found_cb, not_found_cb):
             version = parse_version(cmp_data)
             if version:
                 found_cb(version)
-                return True
+                return version.split(" ")[1]
 
     if not is_found:
         not_found_cb(name)
-        return False
+        return ""
