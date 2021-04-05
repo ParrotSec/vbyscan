@@ -1,0 +1,18 @@
+Source: vbyscan
+Section: utils
+Priority: optional
+Maintainer: Nong Hoang Tu <dmknght@parrotsec.org>
+Build-Depends: debhelper-compat (= 13)
+Standards-Version: 4.5.1
+Homepage: https://parrotsec.org/
+Vcs-Browser: https://nest.parrotsec.org/packages/tools/vbyscan/
+Vcs-Git: https://nest.parrotsec.org/packages/tools/vbyscan/.git
+Rules-Requires-Root: no
+
+Package: vbyscan
+Architecture: any
+Depends: python3
+Description: vbulletin vuln scanner
+ This tool is a fork of OWASP_vbscan with python3. It
+ enumerates vbulletin version, forum misconfigurations,
+ check local vuln db and runs some exploit checks.
