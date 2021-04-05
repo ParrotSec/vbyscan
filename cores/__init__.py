@@ -39,8 +39,7 @@ def enum_vuln(version):
         vuln_db = json.load(vuln_db_file)
         for each_vuln in vuln_db['vuln_db']:
             if db_handler.version_match(version, each_vuln['version']):
-                print(f"{each_vuln['name']}")
-                print(f"{each_vuln['id']}")
-                print(f"{each_vuln['link']}")
+                print(f"  [*] \033[97m{each_vuln['id']}\033[00m - \033[95m{each_vuln['name']}\033[00m")
+                print(f"      \033[94m{each_vuln['link']}\033[00m")
                 if each_vuln['exploit']:
-                    print(f"{each_vuln['exploit']}")
+                    print(f"      \033[91m{each_vuln['exploit']}\033[00m")
