@@ -47,8 +47,7 @@ def backup_finder(req, target, info_cb, found_cb, not_found_cb):
         not_found_cb(name)
 
 
-def config_finder(req, target, info_cb, found_cb, not_found_cb):
-    # TODO need to check original code again
+def config_finder(req, target, version, info_cb, found_cb, not_found_cb):
     # https://github.com/OWASP/vbscan/blob/master/modules/configfinder.pl
     name = "Config files"
     is_found = False
@@ -85,21 +84,20 @@ def config_finder(req, target, info_cb, found_cb, not_found_cb):
 
     info_cb(f"Finding {name}")
 
+    if version.startswith("5"):
+        include = "core/includes/"
+    else:
+        include = "includes/"
+
     for file_name in list_config:
-        uri = f"{target}{file_name}"
+        uri = f"{target}{include}{file_name}"
         r = req.get(uri)
-        if r.status_code == 200:
+        if r.status_code == 200 and ("admincpdir" in r.text or "dbtype" in r.text or "technicalemail" in r.text):
             found_cb(f"Found {name}", uri)
             is_found = True
 
     if not is_found:
         not_found_cb(name)
-    """
-    $source=$ua->get("$target/$incl/$config")->decoded_content;
-    if($source =~ m/admincpdir/i || $source =~ m/dbtype/i || $source =~ m/technicalemail/i){
-        $cnftmp="$cnftmp\Readable config file is found \n config file path : $target/$incl/$config\n";
-        $ctf=1;
-    """
 
 
 def admin_finder(req, target, info_cb, found_cb, not_found_cb):

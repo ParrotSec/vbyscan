@@ -37,6 +37,7 @@ def get_version(req, target, info_cb, found_cb, not_found_cb):
             if version:
                 found_cb(version)
                 return version.split(" ")[1]
+        # TODO handle powered by https://github.com/OWASP/vbscan/blob/master/core/ver.pl#L47
 
     if not is_found:
         not_found_cb(name)

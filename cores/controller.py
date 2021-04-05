@@ -2,7 +2,7 @@ from cores.utils import *
 import requests
 
 
-def fingerprint(client, target, verbose_cb, found_cb, not_found_cb):
+def fingerprint(client, target, version, verbose_cb, found_cb, not_found_cb):
     # FIXME firewall is so slow
     # from modules.enumerate import firewall
     # firewall.firewall_detector(client, target, verbose_cb, found_cb, not_found_cb)
@@ -21,8 +21,7 @@ def fingerprint(client, target, verbose_cb, found_cb, not_found_cb):
     finder.admin_finder(client, target, verbose_cb, found_cb, not_found_cb)
     finder.moderator_finder(client, target, verbose_cb, found_cb, not_found_cb)
 
-    # TODO check config
-    # finder.config_finder(client, target, verbose_cb, found_cb, not_found_cb)
+    finder.config_finder(client, target, version, verbose_cb, found_cb, not_found_cb)
 
     from modules.enumerate import dir_listing
     dir_listing.check_dir_listing(client, target, verbose_cb, found_cb, not_found_cb)
@@ -80,7 +79,7 @@ def main_logic(target, verbose=True):
         return
 
     print("\nTarget enumeration\n")
-    fingerprint(client, target, verbose_cb, info_found_cb, info_not_found_cb)
+    fingerprint(client, target, vb_version, verbose_cb, info_found_cb, info_not_found_cb)
 
     if vb_version:
         import cores
