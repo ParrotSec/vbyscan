@@ -3,9 +3,8 @@ import requests
 
 
 def fingerprint(client, target, version, verbose_cb, found_cb, not_found_cb):
-    # FIXME firewall is so slow
-    # from modules.enumerate import firewall
-    # firewall.firewall_detector(client, target, verbose_cb, found_cb, not_found_cb)
+    from modules.enumerate import firewall
+    firewall.firewall_detector(client, target, verbose_cb, found_cb, not_found_cb)
 
     from modules.enumerate import robots
     robots.robot_check(client, target, verbose_cb, found_cb, not_found_cb)

@@ -1,4 +1,5 @@
 def firewall_detector(req, target, info_cb, found_cb, not_found_cb):
+    # https://github.com/OWASP/vbscan/blob/master/modules/firewall.pl
     name = "vBulletin's default firewall"
     is_found = False
 
