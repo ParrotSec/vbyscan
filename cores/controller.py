@@ -27,9 +27,11 @@ def fingerprint(client, target, version, verbose_cb, found_cb, not_found_cb):
 
     from modules.enumerate import path_disclosure
     path_disclosure.path_disclosure(client, target, verbose_cb, found_cb, not_found_cb)
-
     finder.error_finder(client, target, verbose_cb, found_cb, not_found_cb)
     finder.backup_finder(client, target, verbose_cb, found_cb, not_found_cb)
+
+    from modules.info import pass_logger
+    pass_logger.check_password_logger(client, target, verbose_cb, found_cb, not_found_cb)
 
 
 def vulnerability_scan(client, target, verbose_cb, found_cb, not_found_cb):
