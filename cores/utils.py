@@ -44,6 +44,7 @@ def program_banner():
     print("          |__/ ")
     print(" A fork of    \033[97mOWASP_VBScan\033[0m")
     print("")
-    print("-----[ Author: \033[96mNông Hoàng Tú\033[0m ]---[ \033[94mdmknght@parrotsec.org\033[0m ]")
+    print("-----[ Author: \033[96mNông Hoàng Tú\033[0m ]---[ \033[37mdmknght@parrotsec.org\033[0m ]")
+    print("-----[ Contributor: \033[96mLý Tuấn Kiệt\033[0m ]---[ \033[37m7heknight\033[0m ]")
     print("-----[ \033[94mhttps://nest.parrotsec.org/packages/tools/vbyscan/\033[0m ]")
     print("")
