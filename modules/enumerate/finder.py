@@ -117,7 +117,7 @@ def admin_finder(req, target, info_cb, found_cb, not_found_cb):
         found_cb(f"Found {name}", uri)
         is_admin_found = True
     else:
-        not_found_cb(f"Finding {name} from upgrade.php. {name}")
+        not_found_cb(f"Using upgrade.php technique. {name}")
 
         uri = f"{target}install/upgrade.php"
         r = req.get(uri)
