@@ -1,5 +1,5 @@
 def apache_config_checker(req, target, info_cb, found_cb, not_found_cb):
-    name = "Apache configurations"
+    name = "Apache config path"
     is_found = False
     list_uri = [
         "server-status",
@@ -14,7 +14,7 @@ def apache_config_checker(req, target, info_cb, found_cb, not_found_cb):
         if r.status_code == 200:
             if "Apache Server Information" in str(r.content) or "Server Root" in str(r.content) or \
                     "Apache Status" in str(r.content):
-                found_cb("Apache config path", uri)
+                found_cb(name, uri)
                 is_found = True
     if not is_found:
         not_found_cb(name)
