@@ -89,9 +89,9 @@ def compare_version(vb_version, db_version):
 def version_match(vb_version, db_versions):
     for db_version in db_versions.split("|"):
         if "<" in db_version:
-            match_lesser(vb_version, db_version)
+            return match_lesser(vb_version, db_version)
         elif "-" in db_version:
-            match_range(vb_version, db_version)
+            return match_range(vb_version, db_version)
         else:
             # Compare version
             return compare_version(vb_version, db_version)
