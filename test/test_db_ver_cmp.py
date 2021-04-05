@@ -33,6 +33,7 @@ db_versions = [
     ("3.0.x<5.x", True),
     ("4.1.0<4.1.1", False),
     ("4.1.1<4.1.3", True),
+    ("4.1.1<4.5.3|5.7.2<5.9.9", True)
 ]
 
 for db_version in db_versions:
