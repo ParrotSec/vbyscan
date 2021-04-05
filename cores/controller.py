@@ -59,7 +59,8 @@ def main_logic(target, verbose=True):
 
     try:
         from modules.enumerate import version
-        if not version.get_version(client, target, verbose_cb, info_found_cb, info_not_found_cb):
+        vb_version = version.get_version(client, target, verbose_cb, info_found_cb, info_not_found_cb)
+        if not vb_version:
             if not verbose:
                 print_not_found("vBulletin version")
             while True:
@@ -77,6 +78,11 @@ def main_logic(target, verbose=True):
 
     print("\nTarget enumeration\n")
     fingerprint(client, target, verbose_cb, info_found_cb, info_not_found_cb)
+
+    if vb_version:
+        import cores
+        print("\nEnumerate vulnerabilities from version")
+        cores.enum_vuln(vb_version)
 
     print("\nVulnerability scan\n")
     vulnerability_scan(client, target, verbose_cb, vulnerability_cb, not_vulnerability_cb)

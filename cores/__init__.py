@@ -28,3 +28,19 @@ def gen_hash():
     str_gen = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(8))
     import hashlib
     return hashlib.md5(str_gen.encode('utf-8')).hexdigest()
+
+
+def enum_vuln(version):
+    from cores import db_handler
+    import json
+    import resources
+    resources_path = resources.__path__[0]
+    with open(resources_path + "/db.json") as vuln_db_file:
+        vuln_db = json.load(vuln_db_file)
+        for each_vuln in vuln_db['vuln_db']:
+            if db_handler.version_match(version, each_vuln['version']):
+                print(f"{each_vuln['name']}")
+                print(f"{each_vuln['id']}")
+                print(f"{each_vuln['link']}")
+                if each_vuln['exploit']:
+                    print(f"{each_vuln['exploit']}")
