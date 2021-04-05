@@ -10,7 +10,7 @@
     {
       "name": "MAPI plugin RCE",
       "id": "CVE-2012-4328",
-      "version": "4.1.2-4.1.12",
+      "version": "4.1.2|4.1.12",
       "link": "https://www.cvedetails.com/cve/CVE-2012-4328/",
       "exploit": ""
     },
