@@ -20,7 +20,7 @@ def print_not_vulnerable(name):
 
 
 def print_found(message, uri=""):
-    # Bright green
+    # Bright white
     print(f"  [\033[97m*\033[00m] \033[97m{message}\033[00m")
     if uri:
         # Bright blue
