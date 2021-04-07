@@ -71,7 +71,7 @@
       "exploit": ""
     },
     {
-      "name": "vBulletin 4.2.2 CSRF",
+      "name": "vBulletin 4.2.2 Moderator Control Panel CSRF",
       "id": "CVE-2014-9438",
       "version": "4.2.1",
       "link": "https://www.cvedetails.com/cve/CVE-2014-9438/",
