@@ -9,7 +9,7 @@ def get_version(req, target, info_cb, found_cb, not_found_cb):
             result = re.findall(regex, data)[0]
             if result:
                 return result
-        except:
+        except Exception:
             return ""
 
     name = "Enumerate Vbulletin version"

@@ -41,7 +41,7 @@ def backup_finder(req, target, info_cb, found_cb, not_found_cb):
             if r.status_code == 200 and not r.headers['Content-Type'].startwith("text/html"):
                 found_cb(f"Found {name}", uri)
                 is_found = True
-        except:
+        except Exception:
             pass
     if not is_found:
         not_found_cb(name)
@@ -129,7 +129,7 @@ def admin_finder(req, target, info_cb, found_cb, not_found_cb):
                         result = re.findall(regex, data)[0]
                         if result:
                             return result
-                    except:
+                    except Exception:
                         return ""
                 admin_url = parse_admin_dir(r.text)
                 found_cb(f"Found {name}", admin_url)
@@ -177,7 +177,7 @@ def error_finder(req, target, info_cb, found_cb, not_found_cb):
             if r.status_code == 200 and not r.headers['Content-Type'].startwith("text/html"):
                 found_cb(f"Found {name}", uri)
                 is_found = True
-        except:
+        except Exception:
             pass
 
     if not is_found:
@@ -197,7 +197,7 @@ def license_finder(req, target, info_cb, found_cb, not_found_cb):
         if r.status_code == 200 and "text" in r.headers['Content-Type'] and "vBulletin License Agreement" in r.text:
             found_cb(f"Found {name}", uri)
             is_found = True
-    except:
+    except Exception:
         pass
     if not is_found:
         not_found_cb(name)

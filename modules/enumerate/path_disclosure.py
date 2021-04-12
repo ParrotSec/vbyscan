@@ -15,7 +15,7 @@ def parse_path(data):
             path = re.findall(rg_text, data)[0]
             if path:
                 return path
-        except:
+        except Exception:
             pass
 
     return ""
