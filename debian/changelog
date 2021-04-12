@@ -1,3 +1,9 @@
+vbyscan (0.1.1parrot1) rolling; urgency=medium
+
+  * Convert to native package.
+
+ -- Lorenzo "Palinuro" Faletra <palinuro@parrotsec.org>  Mon, 12 Apr 2021 13:13:11 +0200
+
 vbyscan (0.1.1-parrot0) rolling-testing; urgency=medium
 
   * Restore basic firewall check
